@@ -1,12 +1,16 @@
 const jwt = require('jsonwebtoken');
-const { response } = require('../router');
+// const { response } = require('../router');
 
-const TOKEN_PRIVATE_KEY = process.env.TOKEN_PRIVATE_KEY;
-const TOKEN_EXPIRATION_TIME = process.env.TOKEN_EXPIRATION_TIME;
+exports.generateToken = (input)=>{
 
-exports.generateToken = ()=>{
-    const token = jwt.sign({userId:userId.toString()}, TOKEN_PRIVATE_KEY, {
-        expiresIn: TOKEN_EXPIRATION_TIME,
-    })
+    const {userId} = input
+    const token = jwt.sign({userId:userId}, process.env.TOKEN_PRIVATE_KEY, 
+    // {        expiresIn: process.env.TOKEN_EXPIRATION_TIME    }
+    )
     return token;
+}
+
+exports.verifyToken = (token)=>{
+        const decoded = jwt.verify(token, process.env.TOKEN_PRIVATE_KEY)
+        return decoded;
 }

@@ -1,9 +1,7 @@
-const mongoose =require('mongoose');
 const ErrorLog = require('../models/errorLogs')
 
-exports.logError = async(input) =>{
+exports.logError = async(err=null, errMessage='', statusCode = 500, route='', method='', requestBody='' ) =>{
     try{
-        const {err=null, errMessage='', statusCode = 500, route='', method='', requestBody='' } =input
         const errorLog = await ErrorLog.create({
             err,
             errMessage,
@@ -15,6 +13,6 @@ exports.logError = async(input) =>{
         return Promise.resolve();
     }
     catch{
-        return Promise.reject()
+        return Promise.resolve()
     }
 }
