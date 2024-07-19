@@ -32,10 +32,10 @@ exports.login = async (req, res) => {
     try {
         const user = await User.findOne({ email }).select('email password invalidLoginCount');
         if (!user) {
-            throw new AppError('User not found', 400);
+            throw new Error('User not found', 400);
         }
         if (user.active) {
-            throw new AppError('Access denied!', 403);
+            throw new Error('Access denied!', 403);
         }
 
         const matched = bcrypt.compare(password, user.password)
@@ -46,9 +46,9 @@ exports.login = async (req, res) => {
             }
             if (+invalidLoginCount >= 4) {
                 req.body.userId = user._id;
-                throw new AppError('Your account has been locked', 403);
+                throw new Error('Your account has been locked', 403);
             }
-            throw new AppError('Invalid password', 400);
+            throw new Error('Invalid password', 400);
         }
         const tokenInput = {
             userId: user._id.toString()

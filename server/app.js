@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const cors = require('cors')
 
 const router = require('./router')
 const dbConnection = require('./utils/database')
@@ -17,6 +18,7 @@ dbConnection.connect(process.env.DATABASEURL)
   throw err;
 });
 
+app.use(cors())
 app.use(express.json())
 
 app.use('/app', router)
