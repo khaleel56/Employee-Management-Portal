@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  webapp:
+    container_name: employee-management-portal-container1
+    image: khaleel56/employee-management-portal:latest
+    ports:
+      - "3000:3000"
+
+  authentication:
+    container_name: emp-auth-service-container1
+    build: ./server/auth-service
+    # image: emp-auth-service:latest
+    ports:
+      - "4000:4000"
+
+  user:
+    container_name: emp-user-service-container1
+    build: ./server/user-service
+
+    # image: emp-user-service:latest
+    ports:
+      - "4001:4001"

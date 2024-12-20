@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
         res.token = token;
         await User.findByIdAndUpdate(user._id, { invalidLoginCount: 0 });
         res.status(200).json({
-            message: 'success', 
+            message: 'success',
             token: token
         })
     }
@@ -68,10 +68,10 @@ exports.login = async (req, res) => {
 
 }
 
-exports.getusers = async(req, res)=>{
+exports.getusers = async (req, res) => {
     try {
-        const users = await User.find({active:true}).lean();
-        res.status(200).json({users:users})
+        const users = await User.find({ active: true }).lean();
+        res.status(200).json({ users: users })
     }
     catch (err) {
         errorController.logError(err, 'get list Failed', 500, 'get list', 'GET', {})
