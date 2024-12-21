@@ -4,7 +4,8 @@ const cors = require('cors')
 
 // const router = require('./router')
 const dbConnection = require('./utils/database');
-const User = require('./models/UserModel')
+const User = require('./models/UserModel');
+const logger = require('./utils/logger');
 
 dotenv.config();
 const app = express();
@@ -24,8 +25,9 @@ app.use(express.json())
 
 app.get('/app/user/getUsers', async (req, res) => {
     try {
-        console.log(req)
+        console.log(`user/getUsers--------api`)
         const users = await User.find({ active: true }).lean();
+        logger.info({ 'users': users })
         return res.status(200).json({ users: users })
     }
     catch (err) {
@@ -34,6 +36,7 @@ app.get('/app/user/getUsers', async (req, res) => {
     }
 })
 app.use('*', (req, res, next) => {
+    throw new Error('err')
     res.status(404).json({ message: `Can't find ${req.originalUrl} on this server` })
 })
 
